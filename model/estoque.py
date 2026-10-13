@@ -1,4 +1,4 @@
-from conexao import obter_conexao
+from connect import obter_conexao
 
 def listar_todas():
     with obter_conexao() as conn:
@@ -7,13 +7,13 @@ def listar_todas():
             # fetchall() traz todas as linhas registradas no banco
             return cursor.fetchall()
 
-def inserir(nome, quantidade, preco):
+def inserir(rua, numero, bairro, cidade, estado, cep):
     with obter_conexao() as conn:
         with conn.cursor() as cursor:
             # O %s previne ataques de SQL Injection
             cursor.execute(
-                "INSERT INTO pedrosilva.estoque (nome, quantidade, preco) VALUES (%s, %s, %s)",
-                (nome, quantidade, preco)
+                "INSERT INTO pedrosilva.estoque (rua, numero, bairro, cidade, estado, cep) VALUES (%s, %s, %s, %s, %s, %s)",
+                (rua, numero, bairro, cidade, estado, cep)
             )
-            # Como alteramos o banco, precisamos dar commit
+            #commit é como se fosse dar enter
             conn.commit()
